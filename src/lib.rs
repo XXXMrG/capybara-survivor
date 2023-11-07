@@ -3,12 +3,14 @@
 mod actions;
 mod audio;
 mod loading;
+mod map;
 mod menu;
 mod player;
 
 use crate::actions::ActionsPlugin;
 use crate::audio::InternalAudioPlugin;
 use crate::loading::LoadingPlugin;
+use crate::map::MapPlugin;
 use crate::menu::MenuPlugin;
 use crate::player::PlayerPlugin;
 
@@ -40,6 +42,7 @@ impl Plugin for GamePlugin {
             MenuPlugin,
             ActionsPlugin,
             InternalAudioPlugin,
+            MapPlugin,
             PlayerPlugin,
         ));
 

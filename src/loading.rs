@@ -14,7 +14,8 @@ impl Plugin for LoadingPlugin {
             LoadingState::new(GameState::Loading).continue_to_state(GameState::Menu),
         )
         .add_collection_to_loading_state::<_, AudioAssets>(GameState::Loading)
-        .add_collection_to_loading_state::<_, TextureAssets>(GameState::Loading);
+        .add_collection_to_loading_state::<_, TextureAssets>(GameState::Loading)
+        .add_collection_to_loading_state::<_, MapAssets>(GameState::Loading);
     }
 }
 
@@ -31,4 +32,18 @@ pub struct AudioAssets {
 pub struct TextureAssets {
     #[asset(path = "textures/bevy.png")]
     pub texture_bevy: Handle<Image>,
+}
+
+#[derive(AssetCollection, Resource)]
+pub struct MapAssets {
+    #[asset(texture_atlas(
+        tile_size_x = 16.,
+        tile_size_y = 16.,
+        columns = 12,
+        rows = 11,
+        offset_x = 1.0,
+        offset_y = 1.0
+    ))]
+    #[asset(path = "textures/tilemap.png")]
+    pub tile_maps: Handle<TextureAtlas>,
 }

@@ -2,11 +2,15 @@ use crate::actions::Actions;
 use crate::loading::TextureAssets;
 use crate::GameState;
 use bevy::prelude::*;
+use bevy_inspector_egui::prelude::ReflectInspectorOptions;
+use bevy_inspector_egui::InspectorOptions;
 
 pub struct PlayerPlugin;
 
-#[derive(Component)]
+#[derive(Component, InspectorOptions, Default, Reflect)]
+#[reflect(Component, InspectorOptions)]
 pub struct Player {
+    #[inspector(min = 0.0)]
     pub speed: f32,
 }
 
@@ -15,6 +19,7 @@ pub struct Player {
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(OnEnter(GameState::Playing), spawn_player)
+            .register_type::<Player>()
             .add_systems(Update, move_player.run_if(in_state(GameState::Playing)));
     }
 }
@@ -31,6 +36,7 @@ fn spawn_player(mut commands: Commands, textures: Res<TextureAssets>) {
             ..Default::default()
         },
         Player { speed: 200.0 },
+        Name::new("player"),
     ));
 }
 
